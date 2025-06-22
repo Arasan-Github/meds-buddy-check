@@ -1,9 +1,35 @@
 import { Heart } from 'lucide-react'
-import React from 'react'
+import { useAuth } from './context/AuthContext';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 
 const WelcomeHeader = () => {
+  const { signOut } = useAuth();
+    const navigate = useNavigate();
+  const [error, setError] = useState(null);
+
+  const handleSignOut = async (e) => {
+    e.preventDefault();
+
+    const { success, error } = await signOut();
+     if (success) {
+      navigate("/");
+    } else {
+      setError(error);
+    }
+  }
+
   return (
     <div className="text-center mb-12">
+      <button aria-label="Sign out of your account" onClick={handleSignOut}>
+            Sign out
+          </button>
+          {error && (
+            <div role="role" className="error-message" id="signout-error">
+              {error}
+            </div>
+          )}
           <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-green-500 rounded-2xl flex items-center justify-center mx-auto mb-6">
             <Heart className="w-10 h-10 text-white" />
           </div>
