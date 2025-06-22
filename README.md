@@ -75,3 +75,4 @@ Deploy to Vercel/Netlify
 - State management approach
 - Performance considerations (unnecessary re-renders)
 - Security awareness (input sanitization)
+# meds-buddy-check

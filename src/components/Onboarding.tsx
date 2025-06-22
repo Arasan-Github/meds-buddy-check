@@ -1,7 +1,8 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Users, User, Heart } from "lucide-react";
+import { Users, User } from "lucide-react";
+import WelcomeHeader from "./WelcomeHeader";
 
 interface OnboardingProps {
   onComplete: (userType: "patient" | "caretaker") => void;
@@ -11,17 +12,7 @@ const Onboarding = ({ onComplete }: OnboardingProps) => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-green-50 flex items-center justify-center p-6">
       <div className="max-w-4xl w-full">
-        <div className="text-center mb-12">
-          <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-green-500 rounded-2xl flex items-center justify-center mx-auto mb-6">
-            <Heart className="w-10 h-10 text-white" />
-          </div>
-          <h1 className="text-4xl font-bold text-foreground mb-4">
-            Welcome to MediCare Companion
-          </h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Your trusted partner in medication management. Choose your role to get started with personalized features.
-          </p>
-        </div>
+        <WelcomeHeader />
 
         <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           <Card className="group hover:shadow-xl transition-all duration-300 border-2 hover:border-blue-200 cursor-pointer">
