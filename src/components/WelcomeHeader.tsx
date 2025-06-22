@@ -14,7 +14,7 @@ const WelcomeHeader = () => {
 
     const { success, error } = await signOut();
      if (success) {
-      navigate("/");
+      navigate("/signin");
     } else {
       setError(error);
     }
@@ -22,7 +22,7 @@ const WelcomeHeader = () => {
 
   return (
     <div className="text-center mb-12">
-      <button aria-label="Sign out of your account" onClick={handleSignOut}>
+      <button aria-label="Sign out of your account" className="signout-button" onClick={handleSignOut}>
             Sign out
           </button>
           {error && (

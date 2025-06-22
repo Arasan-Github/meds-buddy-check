@@ -109,7 +109,7 @@
   text-align: center;
 }
 
-/* Signin/Signup Form styles */
+/* Signin Form styles */
 .sign-form-container {
   max-width: 28rem;
   margin: 0 auto;
@@ -219,4 +219,18 @@
 .sign-form-container input {
   margin-right: 0.5rem;
   margin-top: 0;
+}
+
+.signout-button{
+
+  width: 100px;
+ float: left;
+  border-radius: 5px;
+  border: none;
+  font-size: 1rem;
+  font-weight: 600;
+  background-color: #124f33;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
 }

@@ -4,8 +4,8 @@ import {supabase} from '../../supabase-client';
 import type { Session } from '@supabase/supabase-js';
 // Define the context type
 type AuthContextType = {
-  session: Session | null;
-  setSession: (value: Session | null) => void;
+  session: Session | undefined;
+  setSession: (value: Session | undefined) => void;
   signInUser: (email: string, password: string) => Promise<{
     success: boolean;
     error?: string;
@@ -23,7 +23,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 // Provider component with typed props
 export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
-const [session, setSession] = useState<Session | null>(null);
+const [session, setSession] = useState<Session | undefined>(undefined);
 
 
   useEffect(()=>{
@@ -34,7 +34,6 @@ async function getInitialSession() {
         throw error;
       }
 
-      console.log(data.session);
       setSession(data.session);
     } catch (error) {
       console.error('Error getting session:', error.message);
