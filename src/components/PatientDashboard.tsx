@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Calendar } from "@/components/ui/calendar";
@@ -9,10 +9,21 @@ import MedicationTracker from "./MedicationTracker";
 import { format, isToday, isBefore, startOfDay } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "./context/AuthContext";
+import { supabase } from "@/supabase-client";
 
 const PatientDashboard = () => {
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [takenDates, setTakenDates] = useState<Set<string>>(new Set());
+ const [data, setData] = useState<{
+  day_streak: number;
+  todays_status: string;
+  monthly_rate: string;
+}>({
+  day_streak: 0,
+  todays_status: '○',
+  monthly_rate: '0'
+});
+
 
   const today = new Date();
   const todayStr = format(today, 'yyyy-MM-dd');
@@ -43,17 +54,17 @@ const PatientDashboard = () => {
     }
   }
 
-  const getStreakCount = () => {
-    let streak = 0;
-    const currentDate = new Date(today);
+  // const getStreakCount = () => {
+  //   let streak = 0;
+  //   const currentDate = new Date(today);
     
-    while (takenDates.has(format(currentDate, 'yyyy-MM-dd')) && streak < 30) {
-      streak++;
-      currentDate.setDate(currentDate.getDate() - 1);
-    }
+  //   while (takenDates.has(format(currentDate, 'yyyy-MM-dd')) && streak < 30) {
+  //     streak++;
+  //     currentDate.setDate(currentDate.getDate() - 1);
+  //   }
     
-    return streak;
-  };
+  //   return streak;
+  // };
 
   const getDayClassName = (date: Date) => {
     const dateStr = format(date, 'yyyy-MM-dd');
@@ -76,8 +87,31 @@ const PatientDashboard = () => {
     
     return className;
   };
+  //data from supabase
+useEffect(() => {
   
+  const fetchData = async () => {
+  const { data, error } = await supabase
+  .from('patient_view') 
+  .select(`day_streak, todays_status, monthly_rate`);
 
+if (error) {
+  console.error('Error fetching data:', error);
+} else {
+  console.log('Fetched data:', data);
+  setData({
+        day_streak: data[0].day_streak,
+        todays_status: data[0].todays_status,
+        monthly_rate: data[0].monthly_rate,
+      });
+    
+  
+}
+
+  };
+
+  fetchData();
+}, []);
   return (
     <div className="space-y-6">
       <button aria-label="Sign out of your account" className="signout-button" onClick={handleSignOut}>
@@ -102,15 +136,15 @@ const PatientDashboard = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
           <div className="bg-white/10 rounded-xl p-4 backdrop-blur-sm">
-            <div className="text-2xl font-bold">{getStreakCount()}</div>
+            <div className="text-2xl font-bold">{data?.day_streak}</div>
             <div className="text-white/80">Day Streak</div>
           </div>
           <div className="bg-white/10 rounded-xl p-4 backdrop-blur-sm">
-            <div className="text-2xl font-bold">{takenDates.has(todayStr) ? "✓" : "○"}</div>
+            <div className="text-2xl font-bold">{data?.todays_status}</div>
             <div className="text-white/80">Today's Status</div>
           </div>
           <div className="bg-white/10 rounded-xl p-4 backdrop-blur-sm">
-            <div className="text-2xl font-bold">{Math.round((takenDates.size / 30) * 100)}%</div>
+            <div className="text-2xl font-bold">{data?.monthly_rate}</div>
             <div className="text-white/80">Monthly Rate</div>
           </div>
         </div>
