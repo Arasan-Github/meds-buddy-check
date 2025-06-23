@@ -1,9 +1,7 @@
 
 import { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Calendar } from "@/components/ui/calendar";
-import { Badge } from "@/components/ui/badge";
 import { Check, Calendar as CalendarIcon, Image, User } from "lucide-react";
 import MedicationTracker from "./MedicationTracker";
 import { format, isToday, isBefore, startOfDay } from "date-fns";
@@ -54,17 +52,7 @@ const PatientDashboard = () => {
     }
   }
 
-  // const getStreakCount = () => {
-  //   let streak = 0;
-  //   const currentDate = new Date(today);
-    
-  //   while (takenDates.has(format(currentDate, 'yyyy-MM-dd')) && streak < 30) {
-  //     streak++;
-  //     currentDate.setDate(currentDate.getDate() - 1);
-  //   }
-    
-  //   return streak;
-  // };
+
 
   const getDayClassName = (date: Date) => {
     const dateStr = format(date, 'yyyy-MM-dd');

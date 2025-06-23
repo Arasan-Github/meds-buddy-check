@@ -43,7 +43,6 @@ async function getInitialSession() {
   getInitialSession()
   supabase.auth.onAuthStateChange((_event, session) => {
     setSession(session);
-    console.log('Session changed:', session);
   })
   },[])
 
@@ -57,7 +56,6 @@ async function getInitialSession() {
         console.error('Supabase sign-in error:', error.message);
         return { success: false, error: error.message };
       }
-      console.log('Supabase sign-in success:', data);
       return { success: true, data };
     } catch (error) {
       //Unexpected error
