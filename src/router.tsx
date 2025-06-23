@@ -5,8 +5,17 @@ import { createBrowserRouter } from 'react-router-dom';
 import LoginHeader from './LoginHeader';
 import RootRedirect from './routes/RootRedirect';
 import ProtectedRoute from './components/ProtectedRoute';
+import Onboarding from './components/Onboarding';
+import Index from './pages/Index';
 
 export const router = createBrowserRouter([
+  {
+    path: '/welcome',
+    element: <Onboarding onComplete={function (userType: 'patient' | 'caretaker'): void {
+      throw new Error('Function not implemented.');
+    } }/>
+  }
+  ,
   {
     path: '/',
     element: <RootRedirect />,
@@ -22,7 +31,8 @@ export const router = createBrowserRouter([
     path: '/dashboard',
     element: (
       <ProtectedRoute>
-        <WelcomeHeader />
+        {/* <WelcomeHeader /> */}
+        {/* <Index/> */}
         <PatientDashboard />
       </ProtectedRoute>
     ),

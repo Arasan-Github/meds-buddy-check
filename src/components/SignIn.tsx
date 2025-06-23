@@ -27,6 +27,10 @@ const Signin = () => {
       if (success && data?.session) {
         navigate('/dashboard')
         console.log('Sign-in success, redirecting...');
+        window.history.pushState(null, null, window.location.href);
+window.onpopstate = function () {
+window.history.go(1);
+};
       }
     } catch (err: unknown){
   if (err instanceof Error) {

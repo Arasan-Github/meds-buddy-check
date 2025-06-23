@@ -7,6 +7,8 @@ import { Badge } from "@/components/ui/badge";
 import { Check, Calendar as CalendarIcon, Image, User } from "lucide-react";
 import MedicationTracker from "./MedicationTracker";
 import { format, isToday, isBefore, startOfDay } from "date-fns";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "./context/AuthContext";
 
 const PatientDashboard = () => {
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
@@ -26,6 +28,21 @@ const PatientDashboard = () => {
     }
   };
 
+    const [error, setError] = useState(null);
+       const { signOut } = useAuth();
+    const navigate = useNavigate();
+
+  const handleSignOut = async (e) => {
+    e.preventDefault();
+
+    const { success, error } = await signOut();
+     if (success) {
+      navigate("/welcome");
+    } else {
+      setError(error);
+    }
+  }
+
   const getStreakCount = () => {
     let streak = 0;
     const currentDate = new Date(today);
@@ -43,6 +60,7 @@ const PatientDashboard = () => {
     const isPast = isBefore(date, startOfDay(today));
     const isCurrentDay = isToday(date);
     const isTaken = takenDates.has(dateStr);
+   
     
     let className = "";
     
@@ -58,9 +76,18 @@ const PatientDashboard = () => {
     
     return className;
   };
+  
 
   return (
     <div className="space-y-6">
+      <button aria-label="Sign out of your account" className="signout-button" onClick={handleSignOut}>
+            Sign out
+          </button>
+          {error && (
+            <div role="role" className="error-message" id="signout-error">
+              {error}
+            </div>
+          )}
       {/* Welcome Section */}
       <div className="bg-gradient-to-r from-blue-500 to-green-500 rounded-2xl p-8 text-white">
         <div className="flex items-center gap-4 mb-4">

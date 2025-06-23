@@ -11,7 +11,7 @@ const LoginHeader = () => {
             Welcome to MediCare Companion
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Your trusted partner in medication management. Sign into your account.
+            Your trusted partner in medication management. Sign in as patient.
           </p>
         </div>
   )

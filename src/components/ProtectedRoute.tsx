@@ -8,7 +8,7 @@ const ProtectedRoute = ({ children }) => {
     return <div>Loading...</div>;
   }
 
-  return session ? <>{children}</> : <Navigate to="/signin" />;
+  return session ? <>{children}</> : <Navigate to="/welcome" />;
 
 
 };
